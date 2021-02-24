@@ -147,6 +147,12 @@
     <Content Include="Content\Maps\Deck_of_the_Admiralty.jpg" />
     <Content Include="Content\Maps\FirstPeninsula.jpg" />
     <Content Include="Content\Maps\GunkHouserHideout.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Attendant.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Cruceni.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Dead.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Doomed.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Goulis.jpg" />
+    <Content Include="Content\Maps\ShipProgress\Weeping_Pirandello.jpg" />
     <Content Include="Content\Maps\theAttendant-Player.jpg" />
     <Content Include="Content\Maps\WeepingSea.jpg" />
     <Content Include="Content\SaveData\monster.txt" />
