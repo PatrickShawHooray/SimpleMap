@@ -1,0 +1,74 @@
+[
+  {
+    "Player": "John",
+    "Name": "Sylem Nailo",
+    "SortOrder": 6,
+    "Image": "John.png",
+    "Race": "Shadar-Kai",
+    "Class": "Fighter",
+    "HP": 0,
+    "TotalHP": 0,
+    "AC": 0,
+    "Condition": null
+  },
+  {
+    "Player": "Karl",
+    "Name": "G'elle Styyn",
+    "SortOrder": 2,
+    "Image": "Karl.png",
+    "Race": "Tiefling",
+    "Class": "Wizard",
+    "HP": 0,
+    "TotalHP": 0,
+    "AC": 0,
+    "Condition": null
+  },
+  {
+    "Player": "Uri",
+    "Name": "Copper Fang",
+    "SortOrder": 3,
+    "Image": "Uri.png",
+    "Race": "Yuan-Ti",
+    "Class": "Warlock",
+    "HP": 0,
+    "TotalHP": 0,
+    "AC": 0,
+    "Condition": null
+  },
+  {
+    "Player": "Erin",
+    "Name": "Therein",
+    "SortOrder": 4,
+    "Image": "Erin.png",
+    "Race": "Shadar-Kai",
+    "Class": "Fighter",
+    "HP": 0,
+    "TotalHP": 0,
+    "AC": 0,
+    "Condition": null
+  },
+  {
+    "Player": "Chris",
+    "Name": "Wayfaric 'The Shade' Laplander",
+    "SortOrder": 5,
+    "Image": "Chris.png",
+    "Race": "Human",
+    "Class": "Sorcerer",
+    "HP": 0,
+    "TotalHP": 0,
+    "AC": 0,
+    "Condition": null
+  },
+  {
+    "Player": "Ned",
+    "Name": "Nedly",
+    "SortOrder": 1,
+    "Image": "Ned.png",
+    "Race": "Nedling",
+    "Class": "Nedlander",
+    "HP": 10,
+    "TotalHP": 10,
+    "AC": 10,
+    "Condition": null
+  }
+]

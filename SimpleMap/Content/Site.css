@@ -1,0 +1,60 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.overlay {
+    vertical-align: middle;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 12px 12px 12px 12px;
+    user-select: none;
+    z-index: 2;
+}
+
+#mapContainer{
+    position:relative;
+}
+
+#toolBar {
+    z-index: 3;
+}
+
+div.figurine {
+    display: inline;
+    left: 0;
+    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+    background: rgba(255,255,255,0.66);
+    border-radius: 20px;
+    padding: 8px;
+    z-index:3;
+}
+
+.player {
+    border: 2px solid green;
+}
+
+.monster {
+    border: 2px solid red;
+}
