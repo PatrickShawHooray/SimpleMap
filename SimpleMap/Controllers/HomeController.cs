@@ -14,12 +14,12 @@ namespace SimpleMap.Controllers
     {
         public ActionResult Index()
         {
-            var Chars = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\SaveData\characters.json"));
+            var Chars = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\SaveData\characters.json"));
             Chars = Chars.OrderBy(c => c.SortOrder).ToList();
 
-            string monsterText = System.IO.File.ReadAllText(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\SaveData\monster.txt");
+            string monsterText = System.IO.File.ReadAllText(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\SaveData\monster.txt");
 
-            string[] allMapFiles = Directory.GetFiles(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\Maps", "*.*");
+            string[] allMapFiles = Directory.GetFiles(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\Maps", "*.*");
             List<string> fileNames = new List<string>();
             List<SelectListItem> mapItems = new List<SelectListItem>();
             foreach(string f in allMapFiles)
@@ -40,14 +40,14 @@ namespace SimpleMap.Controllers
         [HttpPost]
         public ActionResult SaveMonster(string textToSave)
         {
-            System.IO.File.WriteAllText(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\SaveData\monster.txt", textToSave);
+            System.IO.File.WriteAllText(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\SaveData\monster.txt", textToSave);
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult SaveChars(Character [] chars)
         {
-            List<Character> SavedChars = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\SaveData\characters.json"));
+            List<Character> SavedChars = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\SaveData\characters.json"));
 
             for(int i = 0; i < chars.Length; i++)
             {
@@ -60,7 +60,7 @@ namespace SimpleMap.Controllers
             }
 
             string jsonChars = JsonConvert.SerializeObject(SavedChars, Newtonsoft.Json.Formatting.Indented);
-            System.IO.File.WriteAllText(@"C:\Users\Patrick\source\repos\SimpleMap\SimpleMap\Content\SaveData\characters.json", jsonChars);
+            System.IO.File.WriteAllText(@"C:\Users\Patri\source\repos\cheatlover\SimpleMap\SimpleMap\Content\SaveData\characters.json", jsonChars);
 
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
