@@ -7,7 +7,7 @@
 
 <style>
     .smallBox {
-        max-width: 40px;
+        max-width: 30px;
         text-align: center
     }
 
@@ -72,9 +72,17 @@
         margin-top: 5px;
     }
 
-    #paddingForCharsTable {
+    #mapMargin{
+        margin-top:300px;
+    }
+
+    #char-table-container {
         background-color: white;
         z-index: 1;
+        height: 300px;
+        position: fixed;
+        top:0;
+        z-index:99;
     }
 
     #characterTable {
@@ -87,22 +95,31 @@
         margin-bottom: 10px;
         width: 100%;
     }
+
+    .characterDraggy{
+        font-size: smaller;
+    }
+
+    .playerId {
+        display:none;
+    }
+
+    #garbage:hover{
+        background-color:red;
+        position:fixed;
+        max-width:100px;
+    }
 </style>
 
 <div>
-    <div id="paddingForCharsTable">
+    <div id="char-table-container">
         <table id="characterTable">
             <tr>
-                <td id="monsters">
-                    <div id="monstersDiv" class="characterDraggy" style="background-color:black; color:red;" draggable="true">
-                        <div class="padLeft5 nameClick" style="color:red">Monsters</div>
-                        <textarea id="monsterText" class="padLeft5" style="width:90%; height:100px; margin:5%">@ViewBag.MonsterText</textarea>
-                    </div>
-                </td>
                 @foreach (Character c in ViewBag.Chars)
                 {
                     <td>
                         <div id="@c.Player" class="characterDraggy" draggable="true">
+                            <div class="playerId">@c.PlayerID</div>
                             <div class="nameClick">@c.Name</div>
                             <div class="characterImg">
                                 <img class="characterImage" src="../../Content/CharacterPics/@c.Image" draggable="false" />
@@ -113,7 +130,16 @@
                             </div>
                             <div class="marginTop5">
                                 <div class="padLeft5" style="display:inline; margin-right:10px">AC: @Html.TextBoxFor(model => c.AC, new { @class = "ac smallBox" })</div>
-                                <div class="hpTracker" style="display:inline">HP: @Html.TextBoxFor(model => c.HP, new { @class = "hp smallBox" })/@Html.TextBoxFor(model => c.TotalHP, new { @class = "totalHp smallBox" })</div>
+                                <div class="hpTracker" style="display:inline; margin-right:10px">HP: @Html.TextBoxFor(model => c.HP, new { @class = "hp smallBox" })/@Html.TextBoxFor(model => c.TotalHP, new { @class = "totalHp smallBox" })</div>
+                            </div>
+                            <div class="marginTop5">
+                                <div class="padLeft5" style="display:inline; margin-right:10px">Level: @Html.TextBoxFor(model => c.Level, new { @class = "level smallBox" })</div>
+                                <div class="xpTracker" style="display:inline; margin-right:10px">XP: @Html.TextBoxFor(model => c.XP, new { @class = "xp smallBox" })</div>
+                            </div>
+                            <div class="marginTop5">
+                                <div class="padLeft5" style="display:inline; margin-right:10px">CP: @Html.TextBoxFor(model => c.CP, new { @class = "cp smallBox" })</div>
+                                <div class="hpTracker" style="display:inline">SP: @Html.TextBoxFor(model => c.SP, new { @class = "sp smallBox" })</div>
+                                <div class="xpTracker" style="display:inline">GP: @Html.TextBoxFor(model => c.GP, new { @class = "gp smallBox" })</div>
                             </div>
                         </div>
                     </td>
@@ -121,14 +147,9 @@
             </tr>
         </table>
         <div id="toolBar">
-            <div style="display:inline;">Monster maker: <input id="monsterInitial" maxlength="1" style="width:30px" />
-            <select id="mosterSize">
-                <option value="" selected>Medium</option>
-                <option value="Large" selected>Large</option>
-                <option value="Huge" selected>Huge</option>
-                <option value="Gargantuan" selected>Gargantuan</option>
-            </select>
-            <a id="monsterMaker" class="btn btn-default">Monster</a></div>
+            <div style="display:inline;">
+                <a id="hideChars" class="btn btn-default">Hide/Show Characters</a>
+            </div>
             <div id="playerHolder" style="display:inline; margin-left:30px">
                 @foreach (Character c in ViewBag.Chars)
                 {
@@ -138,19 +159,23 @@
                     <div id="@playerId" class="figurine player" draggable="true" ondragstart="drag_start(event)">@initial</div>
                 }
             </div>
-            <div style="display:inline; margin-left:30px;">@Html.DropDownList("MapSelect", (IEnumerable<SelectListItem>)ViewBag.Maps)</div>
-            <div style="display:inline; margin-left:30px;"><a id="saveChars" class="btn btn-success">Save Chars</a></div>
-            <div style="display:inline; margin-left:30px;"><a id="reduceMapSizeBtn" class="btn btn-info">Smallify Map</a></div>
-            <div style="display:inline; margin-left:30px;"><a id="btnFogEntireMap" class="btn btn-default">Fog All</a></div>
-            <div style="display:inline; margin-left:30px;"><a id="btnDeFogEntireMap" class="btn btn-warning">UnFog</a></div>
+
+            <div style="display:inline; margin-left:10px;">@Html.DropDownList("MapSelect", (IEnumerable<SelectListItem>)ViewBag.Maps)</div>
+            <div style="display:inline; margin-left:10px;"><a id="saveChars" class="btn btn-success">Save Chars</a></div>
+            <div style="display:inline; margin-left:10px;"><a id="reduceMapSizeBtn" class="btn btn-info">Smallify Map</a></div>
+            <div style="display:inline; margin-left:10px;"><a id="increaseMapSizeBtn" class="btn btn-info">Bigify Map</a></div>
+            <div style="display:inline; margin-left:10px;"><a id="btnFogEntireMap" class="btn btn-default">Fog All</a></div>
+            <div style="display:inline; margin-left:10px;"><a id="btnDeFogEntireMap" class="btn btn-warning">UnFog</a></div>
+        </div>
+    </div>
+    <div id="mapMargin">
+        <div ondragover="drag_over(event)" ondrop="drop(event)">
+            <div id="mapContainer">
+                <div id="theMap">
+                </div>
+                <canvas id="canvas" class="overlay"></canvas>
+            </div>
         </div>
     </div>
 </div>
 
-<div ondragover="drag_over(event)" ondrop="drop(event)">
-    
-    <div id="mapContainer">
-        <div id="theMap"></div>
-        <canvas id="canvas" class="overlay"></canvas>
-    </div>
-</div>

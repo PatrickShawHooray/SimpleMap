@@ -15,6 +15,9 @@ namespace SimpleMap
                         "~/Scripts/draggers.js",
                         "~/Scripts/mapFogger.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/battleMap").Include(
+                        "~/Scripts/battle-map-characters.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 

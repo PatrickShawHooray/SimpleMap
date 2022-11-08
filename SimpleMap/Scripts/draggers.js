@@ -1,13 +1,27 @@
-﻿var HELPER = {
+﻿////$(document).ready(function () {
+////    var win = window.open("https://www.youtube.com/watch?v=OPbPAOJXDfQ", 'pat');
+////    setInterval(reload, 345000);
+////});
+
+function reload() {
+    console.log("re load p")
+    location.reload()
+}
+
+var HELPER = {
     IMG_SHOWING: true,
     ORIGIN_TD: "",
-    MONSTER_COUNT: 1
+    MONSTER_COUNT: 1,
+    CHARS_HIDDEN: false
 };
 
 $(document).on("click", "#reduceMapSizeBtn", function () {
-    $("#theMap").width($("#theMap").width() - 100);
     $("#theMap").height($("#theMap").height() - 100);
-    window.setTimeout(setFog, 50);
+});
+
+$(document).on("click", "#increaseMapSizeBtn", function () {
+    $("#theMap").height($("#theMap").height() + 100);
+    $("#theMap").width($("#theMap").width() + 100);
 });
 
 $(document).on("click", ".nameClick", function () {
@@ -15,10 +29,18 @@ $(document).on("click", ".nameClick", function () {
         $(".characterImg").hide();
         $(".characterDetails").show();
         HELPER.IMG_SHOWING = false;
+
+        $("#mapMargin").css("margin-top", "150px");
+        $("#char-table-container").css("height", "150px");
+        $("#toolBar").hide();
     } else {
         $(".characterImg").show();
         $(".characterDetails").hide();
         HELPER.IMG_SHOWING = true;
+
+        $("#mapMargin").css("margin-top", "300px");
+        $("#char-table-container").css("height", "300px");
+        $("#toolBar").show();
     }
 });
 
@@ -60,11 +82,18 @@ function drag_over(event) {
 }
 
 $(document).on("click", ".figurine", function () {
-    $(this).appendTo("#theMap");
+    var $fig = $(this);
+
+    if ($fig.hasClass("onMap")) {
+        return false;
+    }
+
+    $fig.addClass("onMap");
+    $fig.appendTo("#theMap");
 
     var pos = $("#theMap").position();
 
-    $(this).css({
+    $fig.css({
         position: "absolute",
         top: pos.top + "px",
         left: pos.left + "px"
@@ -81,11 +110,11 @@ $(document).on("click", "#monsterMaker", function () {
     HELPER.MONSTER_COUNT = Number(HELPER.MONSTER_COUNT) + 1;
 
     var pos = $("#theMap").position();
-
     var size = $("#mosterSize").val();
+    var figType = $("#typeOfFigure").val();
 
-    var newMonsterToken = '<div id=' + monsterID + ' style="position:absolute; top:' + pos.top + 'px; left:' + pos.left + 'px" class="figurine monster' + size + '" draggable="true" ondragstart="drag_start(event)">' + initial + '</div>';
-    $("#playerHolder").append(newMonsterToken);
+    var newMonsterToken = '<div id=' + monsterID + ' style="position:absolute; top:' + pos.top + 'px; left:' + pos.left + 'px" class="onMap figurine ' + figType + size + '" draggable="true" ondragstart="drag_start(event)">' + initial + '</div>';
+    $(newMonsterToken).appendTo("#theMap");
 });
 
 $(document).on("dblclick", ".figurine", function () {
@@ -104,13 +133,25 @@ $(document).on("dblclick", ".figurine", function () {
     }
 });
 
-$(document).on("dblclick", ".characterDraggy", function () {
-    alert("SUP");
-});
-
 $(document).on("click", "#saveChars", function () {
     saveMonsterText();
-    saveCharacters();
+    saveCharactersStoryMap();
+});
+
+$(document).on("click", "#hideChars", function () {
+    if (HELPER.CHARS_HIDDEN) {
+        $("#characterTable").show();
+        HELPER.CHARS_HIDDEN = false;
+
+        $("#mapMargin").css("margin-top", "50px");
+        $("#char-table-container").css("height", "150px");
+    } else {
+        $("#characterTable").hide();
+        HELPER.CHARS_HIDDEN = true;
+
+        $("#mapMargin").css("margin-top", "50px");
+        $("#char-table-container").css("height", "0px");
+    };
 });
 
 function saveMonsterText() {
@@ -132,26 +173,37 @@ function saveMonsterText() {
     });
 };
 
-
-function saveCharacters() {
+function saveCharactersStoryMap() {
     var chars = $(".characterDraggy");
     var sortOrder = 1;
     var data = [];
     chars.each(function (index) {
         var $this = $(this);
+        var playerID = $this.find(".playerId").html();
         var name = $this.find(".nameClick").html();
         var condition = $this.find(".condition").val();
         var ac = $this.find(".ac").val();
         var hp = $this.find(".hp").val();
         var totalHp = $this.find(".totalHp").val();
+        var xp = $this.find(".xp").val();
+        var level = $this.find(".level").val();
+        var cp = $this.find(".cp").val();
+        var sp = $this.find(".sp").val();
+        var gp = $this.find(".gp").val();
 
         if (name !== "Monsters") {
             data.push({
                 Name: name,
+                PlayerID: playerID,
                 Condition: condition,
                 AC: ac,
                 HP: hp,
                 TotalHP: totalHp,
+                XP: xp,
+                Level: level,
+                CP: cp,
+                SP: sp,
+                GP: gp,
                 SortOrder: sortOrder
             });
 
@@ -189,3 +241,18 @@ backGroundImg.onload = function () {
     $("#theMap").height(this.height);
 };
 
+
+// WIDGETS
+$('.wdigetDraggy').on('dragstart', function (e) {
+    HELPER.ORIGIN_TD = $(this).parent();
+    var dt = e.originalEvent.dataTransfer;
+    dt.setData('Text', $(this).attr('id'));
+});
+
+
+$(document).on("dblclick", ".widget", function () {
+    var $this = $(this);
+    var angle = $this.data('angle') + 90 || 90;
+    $this.css({ 'transform': 'rotate(' + angle + 'deg)' });
+    $this.data('angle', angle);
+});

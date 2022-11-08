@@ -130,11 +130,6 @@ $(document).ready(function () {
     $("#theMap").rwdImageMaps();
 });
 
-// click on canvas also triggers click on image and area
-$("canvas").on("dblclick", function (e) {
-    $("#theMap").trigger("dblclick", e);
-});
-
 // number click P.O.C.
 $("#itemOne").on("dblclick", function () {
     alert("test");
@@ -220,11 +215,6 @@ function pnpoly(nvert, vertx, verty, testx, testy) {
     }
     return c;
 }
-
-$("area").on("click", function (e, event) {
-    //alert("AREA " + event.clientX + " " + event.clientY);
-    alert($(this).attr("alt") + " clicked");
-});
 
 /********** Methods ***********/
 
@@ -316,10 +306,8 @@ function ToggleOverlayUnexploredColor(e) {
 
     // If switching to the DM view mode, then turn all black pixels grey.
     if (e === "DM") {
-
         // For all pixels, if the pixel isn't transparent, set the RGB to grey.
         for (let i = 0; i < data.length; i += 4) {
-
             const alpha = data[i + 3];
 
             if (alpha !== 0) {
@@ -332,7 +320,6 @@ function ToggleOverlayUnexploredColor(e) {
     }
     // Else we're switching to the Player view so turn all grey pixels black.
     else {
-
         // For all pixels, if the pixel isn't the DM transparency value (128), set the RGB to black.
         for (let i = 0; i < data.length; i += 4) {
 
@@ -354,23 +341,26 @@ function ToggleOverlayUnexploredColor(e) {
 
 // Toggles the color of the pixel buffer used for future spray paints.
 function UpdatePixelBufferColor() {
-
     const curViewMode = $("input:radio[name=viewMode]:checked").val();
-    const curTool = $("input:radio[name=tool]:checked").val();
 
     // Set the color based on the current value of the view mode and tool.
-    if (curTool === "DeFogger") {
+    if (curViewMode === "unfog") {
         transparentPixel.data[3] = 0;
-    } else if (curViewMode === "DM" && curTool === "Fogger") {
-        transparentPixel.data[0] = 181;
-        transparentPixel.data[1] = 171;
-        transparentPixel.data[2] = 165;
-        transparentPixel.data[3] = 128;
-    } else if (curViewMode === "Player" && curTool === "Fogger") {
+    } else if (curViewMode === "refog") {
         transparentPixel.data[0] = 0;
         transparentPixel.data[1] = 0;
         transparentPixel.data[2] = 0;
         transparentPixel.data[3] = 255;
+    } else if (curViewMode === "draw") {
+        transparentPixel.data[0] = 0;
+        transparentPixel.data[1] = 0;
+        transparentPixel.data[2] = 0;
+        transparentPixel.data[3] = 255;
+    } else if (curViewMode === "peak") {
+        transparentPixel.data[0] = 181;
+        transparentPixel.data[1] = 171;
+        transparentPixel.data[2] = 165;
+        transparentPixel.data[3] = 128;
     }
 }
 
@@ -429,6 +419,9 @@ function spray(pos) {
 
 // Solid circle effect. Puts all pixels within the radius of the click to transparent.
 function spraySolid(pos) {
+    if ($("input[name='viewMode']:checked").val() == "draw") {
+        return false;
+    }
 
     // Create the range of pixels to search through.
     const startX = pos.x - radius;
@@ -477,6 +470,8 @@ function mainLoop() {
 
 // click placed on document, catches events that bubble up from anywhere in the page
 $(document).click(function (e) {
+    console.log("PAPSPASF");
+
     var clickX = e.pageX,
         clickY = e.pageY,
         offset,
@@ -501,6 +496,9 @@ $(document).click(function (e) {
         return this.nodeName + " " + this.className;
     }).get();
 });
+
+
+
 
 /*
  * END - Clicks through elements P.O.C.

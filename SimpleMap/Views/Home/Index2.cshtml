@@ -1,0 +1,334 @@
+﻿@using SimpleMap.Models
+
+@{
+    ViewBag.Title = "Home Page";
+    Random _rand = new Random();
+}
+
+<style>
+    .leftBar {
+        position: fixed;
+        z-index: 3;
+        background-color: #d7c0a9;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 100%;
+    }
+
+    .rightBar {
+        background-color:white;
+    }
+
+    #toolBar {
+        width: 100%;
+        background-color: white;
+        padding: 3px;
+    }
+
+    .barbarian {
+        background-color: rgba(231,98,62,.4);
+    }
+
+    .bard {
+        background-color: rgba(171,109,172,.4);
+    }
+
+    .cleric {
+        background-color: rgba(145,161,178,.4);
+    }
+
+    .druid {
+        background-color: rgba(122,133,59,.4);
+    }
+
+    .fighter {
+        background-color: rgba(127,81,62,.4);
+    }
+
+    .monk {
+        background-color: rgba(81,165,197,.4);
+    }
+
+    .paladin {
+        background-color: rgba(181,158,84,.4);
+    }
+
+    .ranger {
+        background-color: rgba(80,127,98,.4);
+    }
+
+    .rogue {
+        background-color: rgba(85,87,82,.4);
+    }
+
+    .sorcerer {
+        background-color: rgba(153,46,46,.4);
+    }
+
+    .warlock {
+        background-color: rgba(123,70,155,.4);
+    }
+
+    .wizard {
+        background-color: rgba(42,80,161,.4);
+    }
+
+    .smallBox {
+        max-width: 30px;
+        text-align: center
+    }
+
+    .mediumBox {
+        max-width: 70px;
+        text-align: center
+    }
+
+    .longBox {
+        max-width: 50%;
+    }
+
+    body {
+        padding-top: 2px;
+        height: 95vh;
+    }
+
+    .characterImage {
+        background-size: 100%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .PC-name {
+        text-align: center;
+        font-weight: bolder;
+    }
+
+    .characterDetails {
+        display: none;
+        padding-left: 5px;
+    }
+
+        .characterDetails > div {
+            margin-bottom: 3px;
+        }
+
+    .hpTracker {
+        width: 100%;
+        color: black;
+        text-align: center;
+    }
+
+    td {
+        width: 12%;
+        border: 2px solid black;
+    }
+
+    #theMap {
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-image: url('/Content/Maps/FirstPeninsula.jpg');
+        width: 1000px;
+        height: 1000px;
+    }
+
+    .padLeft5 {
+        padding-left: 5px;
+    }
+
+    .marginTop5 {
+        margin-top: 5px;
+    }
+
+    #char-table-container {
+        background-color: white;
+        z-index: 1;
+        height: 300px;
+        top: 0;
+        z-index: 99;
+    }
+
+    #characterTable {
+        width: 100%;
+        background-color: whitesmoke;
+    }
+
+    .characterDraggy {
+        font-size: smaller;
+    }
+
+    .playerId {
+        display: none;
+    }
+
+    #garbage:hover {
+        background-color: red;
+        position: fixed;
+        max-width: 100px;
+    }
+
+    .fightStats span {
+        margin-left: 5px;
+    }
+
+        .fightStats span input {
+            margin-bottom: 5px;
+        }
+
+    .smallButton{
+        font-size:small;
+        padding: 4px 6px;
+    }
+
+    #toolBar{
+        position:fixed;
+    }
+
+    #mapContainer{
+        top: 80px;
+    }
+
+    #btnFogEntireMap{
+        background-color:gray;
+        color:white;
+    }
+
+    #btnFogEntireMap:hover {
+        background-color: black;
+        color: white;
+    }
+
+    #btnDeFogEntireMap {
+        background-color: lightgray;
+        color: gray;
+    }
+
+    #btnDeFogEntireMap:hover {
+        background-color: white;
+        color: gray;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-2 leftBar">MAP TIME</div>
+    <div class="col-sm-10 rightBar">
+        <div id="toolBar">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div style="display:inline">
+                        <label>Map:</label>
+                        @Html.DropDownList("MapSelect", (IEnumerable<SelectListItem>)ViewBag.Maps)
+                    </div>
+                    <div style="display:inline; margin-left:10px;"><a id="reduceMapSizeBtn" class="btn btn-info smallButton">Smallify Map</a></div>
+                    <div style="display:inline; margin-left:10px;"><a id="increaseMapSizeBtn" class="btn btn-info smallButton">Bigify Map</a></div>
+                </div>
+                <div class="col-sm-8">
+                    <div style="display:inline">
+                        <label>Fog:</label>
+                        <input value="unfog" name="viewMode" type="radio" checked="checked" />unfog
+                        <input value="refog" name="viewMode" type="radio" />refog
+                        
+                        <input value="peak" name="viewMode" type="radio" />peak
+                        <a id="btnFogEntireMap" class="btn btn-default smallButton">Complete Fog</a>
+                        <a id="btnDeFogEntireMap" class="btn btn-warning smallButton">Remove Fog</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row marginTop5">
+                <div class="col-sm-4">
+                    <div style="display:inline;">
+                        <label>Token Maker:</label>
+                        <span>Size:</span>
+                        <select id="mosterSize">
+                            <option value="Small">Small</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Large">Large</option>
+                            <option value="Huge">Huge</option>
+                            <option value="Gargantuan">Gargantuan</option>
+                        </select>
+                        <span>Type:</span>
+                        <select id="typeOfFigure">
+                            <option value="Monster">Monster</option>
+                            <option value="Ally">Ally</option>
+                            <option value="Object">Object</option>
+                        </select>
+                        <input id="monsterInitial" maxlength="1" style="width:30px" />
+                        <a id="monsterMaker" class="btn btn-default smallButton">Create</a>
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <label>Draw:</label>
+                    <input value="draw" name="viewMode" type="radio" />on
+                </div>
+
+            </div>
+            
+            
+
+            <div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-2 leftBar">
+        <div id="char-table-container">
+            <table id="characterTable">
+                <tr>
+                    <td id="monsters">
+                        <div id="monstersDiv" class="monster characterDraggy" style="background-color: black;color: red;" draggable="true">
+                            <div class="padLeft5 PC-name" style="color:red">Monsters</div>
+                            <textarea id="monsterText" class="padLeft5" style="width:90%; height:100px; margin:5%">@ViewBag.MonsterText</textarea>
+                        </div>
+                    </td>
+                </tr>
+                @foreach (Character c in ViewBag.Chars)
+                {
+                    string shortName = c.Name.Length > 20 ? c.Name.Substring(0, 20) + ".." : c.Name;
+                    string charClass = c.Class.ToLower();
+
+                    string initial = c.Name[0].ToString();
+                    string num = _rand.Next(1, 1000).ToString();
+                    string playerId = initial + num + "_figure";
+
+                    <tr>
+                        <td>
+                            <div id="@c.Player" class="character characterDraggy @charClass" draggable="true">
+                                <div class="playerId">@c.PlayerID</div>
+                                <div class="PC-name">@shortName</div>
+                                <div id="playerHolder" style="float:right; margin-right:2px">
+                                    <div id="@playerId" class="figurine player" draggable="true" ondragstart="drag_start(event)">@initial</div>
+                                </div>
+                                @*<div class="row">*@
+                                @*<div class="col-sm-10">*@
+                                <div class="fightStats">
+                                    <span>Condition: @Html.TextBoxFor(model => c.Condition, new { @class = "condition charBattleDetail longBox" })</span><br />
+                                    <span>AC: @Html.TextBoxFor(model => c.AC, new { @class = "ac charBattleDetail smallBox" })</span>
+                                    <span>HP: @Html.TextBoxFor(model => c.HP, new { @class = "hp charBattleDetail smallBox" })/@Html.TextBoxFor(model => c.TotalHP, new { @class = "totalHp charBattleDetail smallBox" })</span>
+                                </div>
+                                @*</div>*@
+                                @*<div class="col-sm-2">*@
+                                @*</div>*@
+                                @*</div>*@
+                            </div>
+                        </td>
+                    </tr>
+                 }
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-10 rightBar">
+        <div>
+            <div ondragover="drag_over(event)" ondrop="drop(event)">
+                <div id="mapContainer">
+                    <div id="theMap">
+                    </div>
+                    <canvas id="canvas" class="overlay"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
