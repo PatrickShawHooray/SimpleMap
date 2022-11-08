@@ -41,7 +41,7 @@
     "SortOrder": 4,
     "Image": "Erin.png",
     "Race": "Shadar-Kai",
-    "Class": "Fighter",
+    "Class": "Monk",
     "HP": 0,
     "TotalHP": 0,
     "AC": 0,
@@ -49,7 +49,7 @@
   },
   {
     "Player": "Chris",
-    "Name": "Wayfaric 'The Shade' Laplander",
+    "Name": "Wayfaric the Shade Laplander",
     "SortOrder": 5,
     "Image": "Chris.png",
     "Race": "Human",
@@ -57,18 +57,6 @@
     "HP": 0,
     "TotalHP": 0,
     "AC": 0,
-    "Condition": null
-  },
-  {
-    "Player": "Ned",
-    "Name": "Nedly",
-    "SortOrder": 1,
-    "Image": "Ned.png",
-    "Race": "Nedling",
-    "Class": "Nedlander",
-    "HP": 10,
-    "TotalHP": 10,
-    "AC": 10,
     "Condition": null
   }
 ]

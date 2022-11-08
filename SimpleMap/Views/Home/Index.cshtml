@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home Page";
+    Random _rand = new Random();
 }
 
 <style>
@@ -120,12 +121,20 @@
             </tr>
         </table>
         <div id="toolBar">
-            <div style="display:inline;">Monster maker: <input id="monsterInitial" maxlength="1" style="width:30px" /><a id="monsterMaker" class="btn btn-default">Go</a></div>
+            <div style="display:inline;">Monster maker: <input id="monsterInitial" maxlength="1" style="width:30px" />
+            <select id="mosterSize">
+                <option value="" selected>Medium</option>
+                <option value="Large" selected>Large</option>
+                <option value="Huge" selected>Huge</option>
+                <option value="Gargantuan" selected>Gargantuan</option>
+            </select>
+            <a id="monsterMaker" class="btn btn-default">Monster</a></div>
             <div id="playerHolder" style="display:inline; margin-left:30px">
                 @foreach (Character c in ViewBag.Chars)
                 {
                     string initial = c.Name[0].ToString();
-                    string playerId = initial + "_figure";
+                    string num = _rand.Next(1, 1000).ToString();
+                    string playerId = initial + num + "_figure";
                     <div id="@playerId" class="figurine player" draggable="true" ondragstart="drag_start(event)">@initial</div>
                 }
             </div>

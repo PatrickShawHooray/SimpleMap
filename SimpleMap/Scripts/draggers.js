@@ -82,7 +82,9 @@ $(document).on("click", "#monsterMaker", function () {
 
     var pos = $("#theMap").position();
 
-    var newMonsterToken = '<div id=' + monsterID + ' style="position:absolute; top:' + pos.top + 'px; left:' + pos.left + 'px" class="figurine monster" draggable="true" ondragstart="drag_start(event)">' + initial + '</div>';
+    var size = $("#mosterSize").val();
+
+    var newMonsterToken = '<div id=' + monsterID + ' style="position:absolute; top:' + pos.top + 'px; left:' + pos.left + 'px" class="figurine monster' + size + '" draggable="true" ondragstart="drag_start(event)">' + initial + '</div>';
     $("#playerHolder").append(newMonsterToken);
 });
 
