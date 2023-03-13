@@ -3,11 +3,11 @@
     "Player": "Nolan",
     "PlayerID": 7,
     "Name": "{nolan}",
-    "SortOrder": 4,
+    "SortOrder": 2,
     "Image": "Nolan.png",
     "Race": "Leonin",
     "Class": "Fighter",
-    "HP": 11,
+    "HP": 14,
     "TotalHP": 14,
     "XP": 0,
     "CP": 0,
@@ -15,17 +15,17 @@
     "GP": 0,
     "Level": 1,
     "AC": 18,
-    "Condition": "6"
+    "Condition": "13"
   },
   {
     "Player": "Henry",
     "PlayerID": 6,
     "Name": "Man From Ohio",
-    "SortOrder": 2,
+    "SortOrder": 4,
     "Image": "Henry1.jpg",
     "Race": "Eyeball",
     "Class": "Barbarian",
-    "HP": 0,
+    "HP": 19,
     "TotalHP": 22,
     "XP": 300,
     "CP": 0,
@@ -33,7 +33,7 @@
     "GP": 15,
     "Level": 1,
     "AC": 18,
-    "Condition": "17"
+    "Condition": "1"
   },
   {
     "Player": "Alejo",
@@ -43,7 +43,7 @@
     "Image": "Alejo.png",
     "Race": "Aarakocra",
     "Class": "Ranger",
-    "HP": 16,
+    "HP": 22,
     "TotalHP": 22,
     "XP": 850,
     "CP": 0,
@@ -79,7 +79,7 @@
     "Image": "Ronen.png",
     "Race": "Teifling",
     "Class": "Paladin",
-    "HP": 12,
+    "HP": 11,
     "TotalHP": 22,
     "XP": 600,
     "CP": 0,
@@ -87,7 +87,7 @@
     "GP": 817,
     "Level": 2,
     "AC": 18,
-    "Condition": "9"
+    "Condition": "12"
   },
   {
     "Player": "Joaquen",
@@ -105,7 +105,7 @@
     "GP": 71,
     "Level": 2,
     "AC": 11,
-    "Condition": null
+    "Condition": "deafened"
   },
   {
     "Player": "Maddox",
