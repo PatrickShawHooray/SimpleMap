@@ -158,12 +158,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\CharacterPics\Chris.png" />
-    <Content Include="Content\CharacterPics\Erin.png" />
-    <Content Include="Content\CharacterPics\John.png" />
-    <Content Include="Content\CharacterPics\Karl.png" />
-    <Content Include="Content\CharacterPics\Ned.png" />
-    <Content Include="Content\CharacterPics\Uri.png" />
     <Content Include="Content\Maps\Deck_of_the_Admiralty.jpg" />
     <Content Include="Content\Maps\FirstPeninsula.jpg" />
     <Content Include="Content\Maps\GunkHouserHideout.jpg" />
@@ -245,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\CharacterPics\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

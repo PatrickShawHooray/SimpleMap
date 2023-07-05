@@ -366,9 +366,19 @@ function UpdatePixelBufferColor() {
 
 // Fog up the entire map.
 function FogEverything() {
-    const width = $("#canvas").width();
-    const height = $("#canvas").height();
-    ctx.fillRect(0, 0, width, height);
+    //get the map width
+    const mapWidth = $("#theMap").width();
+    const mapHeight = $("#theMap").width();
+
+    // Set the canvas's resolution and size (not CSS).
+    var canvas = document.getElementById("canvas");
+    canvas.width = mapWidth;
+    canvas.height = mapHeight;
+
+    //ctx.width = mapWidth;
+    //ctx.height = mapHeight;
+
+    ctx.fillRect(0, 0, mapWidth, mapHeight);
 }
 
 // Reveal everything on the map.
